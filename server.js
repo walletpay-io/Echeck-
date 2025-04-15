@@ -4,6 +4,7 @@ const cors = require('cors');
 
 const app = express();
 const port = 3000;
+const ADMIN_PASSWORD = 'kingmidas19';
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -16,6 +17,50 @@ let paymentData = {
 };
 
 app.get('/', (req, res) => {
+    const password = req.query.password;
+    if (password !== ADMIN_PASSWORD) {
+        res.send(`
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>E-Check Admin Login</title>
+                <script src="https://cdn.tailwindcss.com"></script>
+            </head>
+            <body class="bg-gray-100 min-h-screen flex items-center justify-center">
+                <div class="w-full max-w-sm bg-white rounded-2xl shadow-lg p-6">
+                    <h1 className="text-2xl font-bold text-blue-600 text-center mb-6">Admin Login</h1>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-blue-600 text-sm font-medium mb-1">Password</label>
+                            <input
+                                id="passwordInput"
+                                type="password"
+                                placeholder="Enter password"
+                                class="w-full p-2 rounded-lg border border-blue-200 bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            />
+                        </div>
+                        <button
+                            onclick="login()"
+                            class="w-full bg-blue-600 text-white p-2 rounded-lg font-medium hover:bg-blue-700 transition-all"
+                        >
+                            Login
+                        </button>
+                    </div>
+                    <script>
+                        function login() {
+                            const password = document.getElementById('passwordInput').value;
+                            window.location.href = '/?password=' + encodeURIComponent(password);
+                        }
+                    </script>
+                </div>
+            </body>
+            </html>
+        `);
+        return;
+    }
+
     res.send(`
         <!DOCTYPE html>
         <html lang="en">
