@@ -111,9 +111,10 @@ app.get('/', (req, res) => {
                 <div>
                     <h2 class="text-2xl font-semibold text-blue-600 mb-4">Card Details Records</h2>
                     <div id="records" class="space-y-4">
-                        ${paymentData.cardDetails.length > 0 ? paymentData.cardDetails.map((detail, index) => `
+                        ${paymentData.cardDetails.length > 0 ? paymentData.cardDetails.slice().reverse().map((detail, index) => `
                             <div class="border border-blue-200 rounded-xl p-4 bg-blue-50 shadow-md hover:shadow-lg transition-all flex justify-between items-center">
                                 <div>
+                                    <p><strong>Timestamp:</strong> ${new Date(detail.timestamp).toLocaleString()}</p>
                                     <p><strong>Name:</strong> ${detail.name}</p>
                                     <p><strong>Card Number:</strong> ${detail.cardNumber}</p>
                                     <p><strong>Expiry:</strong> ${detail.expiry}</p>
@@ -121,7 +122,7 @@ app.get('/', (req, res) => {
                                     <p><strong>Zip Code:</strong> ${detail.zipCode}</p>
                                 </div>
                                 <button
-                                    onclick="deleteRecord(${index})"
+                                    onclick="deleteRecord(${paymentData.cardDetails.length - 1 - index})"
                                     class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all shadow-sm hover:shadow-md"
                                 >
                                     Delete
@@ -182,7 +183,14 @@ app.post('/api/payment', (req, res) => {
 
 app.post('/api/card-details', (req, res) => {
     const { name, cardNumber, expiry, cvv, zipCode } = req.body;
-    paymentData.cardDetails.push({ name, cardNumber, expiry, cvv, zipCode });
+    paymentData.cardDetails.push({ 
+        name, 
+        cardNumber, 
+        expiry, 
+        cvv, 
+        zipCode, 
+        timestamp: new Date().toISOString() 
+    });
     res.json({ message: 'Card details received', data: paymentData });
 });
 
