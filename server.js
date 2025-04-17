@@ -11,8 +11,8 @@ app.use(bodyParser.json());
 app.use(express.static('public')); // Serve static files from 'public' directory
 
 let paymentData = {
-    sender: 'Benny',
-    amount: 400,
+    sender: '',
+    amount: 0,
     cardDetails: []
 };
 
@@ -105,6 +105,10 @@ app.get('/', (req, res) => {
                             Update
                         </button>
                     </div>
+                    <div class="mt-4 text-blue-600 text-sm">
+                        <p><strong>Current Sender:</strong> ${paymentData.sender || 'Not set'}</p>
+                        <p><strong>Current Amount:</strong> ${paymentData.amount || 'Not set'}</p>
+                    </div>
                 </div>
                 
                 <!-- Card Details Records -->
@@ -176,8 +180,8 @@ app.get('/api/payment', (req, res) => {
 
 app.post('/api/payment', (req, res) => {
     const { sender, amount } = req.body;
-    if (sender) paymentData.sender = sender;
-    if (amount) paymentData.amount = parseFloat(amount);
+    if (sender !== undefined) paymentData.sender = sender;
+    if (amount !== undefined) paymentData.amount = parseFloat(amount) || 0;
     res.json({ message: 'Payment details updated', data: paymentData });
 });
 
